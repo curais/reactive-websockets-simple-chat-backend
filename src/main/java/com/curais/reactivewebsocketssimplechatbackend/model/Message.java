@@ -15,6 +15,10 @@ public class Message {
         this.user = user;
     }
 
+    public Message(){
+        super();
+    }
+
     public String getMessage() {
         return message;
     }

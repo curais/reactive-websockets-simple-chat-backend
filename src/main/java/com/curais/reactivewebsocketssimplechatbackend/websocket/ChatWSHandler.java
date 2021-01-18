@@ -2,14 +2,11 @@ package com.curais.reactivewebsocketssimplechatbackend.websocket;
 
 import java.time.Duration;
 
-import com.curais.reactivewebsocketssimplechatbackend.model.Message;
-import com.curais.reactivewebsocketssimplechatbackend.service.IChatService;
-import com.fasterxml.jackson.core.JsonFactory;
+import com.curais.reactivewebsocketssimplechatbackend.model.Message
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.socket.WebSocketHandler;
 import org.springframework.web.reactive.socket.WebSocketSession;
@@ -28,9 +25,6 @@ public class ChatWSHandler implements WebSocketHandler {
     private Many<Message> sink = Sinks.many().replay().limit(100);
     private Flux<?> outputMessages = sink.asFlux();
 
-    @Autowired
-    IChatService service;
-
     @Override
     public Mono<Void> handle(WebSocketSession session) {
         session.receive()
@@ -43,9 +37,10 @@ public class ChatWSHandler implements WebSocketHandler {
                     }
                 })
             .onErrorMap((Throwable error) -> error)
-            .doOnNext(msg -> service.pushMessage(msg, "chat"))
             .subscribe(
-                message -> sink.tryEmitNext(message),
+                message -> {
+                    sink.tryEmitNext(message);
+                },
                 error -> sink.tryEmitError(error)
             );
         return session.send(

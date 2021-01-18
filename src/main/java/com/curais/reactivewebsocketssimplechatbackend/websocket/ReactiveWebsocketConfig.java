@@ -20,7 +20,7 @@ public class ReactiveWebsocketConfig {
     @Bean
     public HandlerMapping webSocketHandlerMapping() {
         Map<String, WebSocketHandler> map = new HashMap<>();
-        map.put("/chat", webSocketHandler);
+        map.put("/ws/chat", webSocketHandler);
 
         SimpleUrlHandlerMapping handlerMapping = new SimpleUrlHandlerMapping();
         handlerMapping.setOrder(1);
