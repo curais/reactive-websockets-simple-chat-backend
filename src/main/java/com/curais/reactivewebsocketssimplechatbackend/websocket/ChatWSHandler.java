@@ -2,7 +2,7 @@ package com.curais.reactivewebsocketssimplechatbackend.websocket;
 
 import java.time.Duration;
 
-import com.curais.reactivewebsocketssimplechatbackend.model.Message
+import com.curais.reactivewebsocketssimplechatbackend.model.Message;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
